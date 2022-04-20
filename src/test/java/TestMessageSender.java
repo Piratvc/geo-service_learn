@@ -9,13 +9,14 @@ import ru.netology.i18n.LocalizationService;
 import ru.netology.i18n.LocalizationServiceImpl;
 import ru.netology.sender.MessageSender;
 import ru.netology.sender.MessageSenderImpl;
+
 import java.util.HashMap;
 
 
-public class TestSender {
+public class TestMessageSender {
 
     @Test
-   public void testRussiaIp() {
+    public void testRussiaIp() {
 
         GeoService geoService = Mockito.mock(GeoService.class);
         Mockito.when(geoService.byIp("172.152.22.11"))
@@ -23,7 +24,7 @@ public class TestSender {
 
         LocalizationService localizationService = Mockito.mock(LocalizationService.class);
         Mockito.when(localizationService.locale(Country.RUSSIA))
-                .thenReturn( "Добро пожаловать");
+                .thenReturn("Добро пожаловать");
 
         MessageSender messageSender = new MessageSenderImpl(geoService, localizationService);
 
@@ -36,6 +37,7 @@ public class TestSender {
         Assertions.assertEquals(expected,
                 actual);
     }
+
     @Test
     public void testUSAIp() {
         GeoService geoService = Mockito.mock(GeoService.class);
@@ -44,7 +46,7 @@ public class TestSender {
 
         LocalizationService localizationService = Mockito.mock(LocalizationService.class);
         Mockito.when(localizationService.locale(Country.USA))
-                .thenReturn( "Welcome");
+                .thenReturn("Welcome");
 
         MessageSender messageSender = new MessageSenderImpl(geoService, localizationService);
 
@@ -59,35 +61,11 @@ public class TestSender {
 
     }
 
-    @Test
-    public void testIpCountry() {
-        GeoService geoService = new GeoServiceImpl();
 
-        Location actual = geoService.byIp("96.222.12.1");
-        Location expected = new Location(("New York"), Country.USA, null, 0);
 
-        Assertions.assertEquals(expected.getCountry(), actual.getCountry());
-
-    }
-
-    @Test
-    public void testTextReturnRus() {
-        LocalizationService localizationService = new LocalizationServiceImpl();
-
-        String actual = localizationService.locale(Country.RUSSIA);
-        String expected = "Добро пожаловать";
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testTextReturnUSA() {
-        LocalizationService localizationService = new LocalizationServiceImpl();
-
-        String actual = localizationService.locale(Country.USA);
-        String expected = "Welcome";
-
-        Assertions.assertEquals(expected, actual);
-    }
 
 }
+
+
+
+
